@@ -39,7 +39,7 @@ namespace ProjectsPlanning.Chernetsov.Configuration
             builder.HasOne(emp => emp.Company)
                 .WithOne(c => c.Employee)
                 .HasForeignKey<Company>(emp => emp.EmployeeId)
-                .HasConstraintName("FK_Companies_EmployeeId_Companies_Id")
+                .HasConstraintName("FK_Employees_CompanyId_Companies_Id")
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

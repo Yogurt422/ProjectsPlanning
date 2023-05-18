@@ -18,15 +18,14 @@ namespace ProjectsPlanning.Chernetsov.Configuration
             builder.HasOne(pt => pt.Plan)
                 .WithMany(p => p.PlanTasks)
                 .HasForeignKey(pt => pt.PlanId)
-                .HasConstraintName("FK_PlanTasks_PlanId_Plan_Id")
+                .HasConstraintName("FK_PlanTasks_PlanId_Plans_Id")
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(pt => pt.Task)
                 .WithMany(t => t.PlanTasks)
                 .HasForeignKey(pt => pt.TaskId)
-                .HasConstraintName("FK_PlanTasks_TaskId_Task_Id")
+                .HasConstraintName("FK_PlanTasks_TaskId_Tasks_Id")
                 .OnDelete(DeleteBehavior.NoAction);
-
         }
     }
 }

@@ -14,6 +14,7 @@
 
         public Status Status { get; set; }
         public TaskType TaskType { get; set; }
+
         public ICollection<PlanTask> PlanTasks { get; set; }
     }
 }

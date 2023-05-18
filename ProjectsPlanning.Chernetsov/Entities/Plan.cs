@@ -10,6 +10,7 @@
         public int ProjectId { get; set; }
 
         public Project Project { get; set; }
+
         public ICollection<PlanTask> PlanTasks { get; set; }
 
     }
