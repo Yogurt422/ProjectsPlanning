@@ -10,8 +10,9 @@
 
         public int EmployeeId { get; set; }
 
-        public ICollection<Project> Projects { get; set; }
         public Employee Employee { get; set; }
+
+        public ICollection<Project> Projects { get; set; }
 
     }
 }

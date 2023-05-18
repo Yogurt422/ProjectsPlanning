@@ -11,12 +11,12 @@
         public int CompanyId { get; set; }
         public int CategoryId { get; set; }
         public int StatusId { get; set; }
-        public int PlanId { get; set; }
 
         public Company Company { get; set; }
         public Category Category { get; set; }
         public Status Status { get; set; }
         public Plan Plan { get; set; }
+
         public ICollection<Team> Teams { get; set; }
      
 
