@@ -7,27 +7,51 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProjectsPlanning.Chernetsov.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/container.css" />
+    <script src="/js/container.js</script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body>
                             @*-------------------------Верх@*-------------------------*@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <img src="img/logo.png" class="" style=""/>
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ProjectsPlanning.Chernetsov</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
+            <div class="container-fluid">
+                <div class="row container-fluid justify-content-end">
+                    @*Название и переходы*@
+                    <div class="col-4 border border-warning container-fluid align-content-center">
+                        @*Название*@
+                        <div class="row border border-warning text-center">
+                            <h1>ООО"Топаз"</h1>
+                            <h2>Планирование выполнения проектов</h2>
+                        </div>
+                        @*Переходы*@
+                        <div class="row border border-warning">
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1 justify-content-center">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Проекты</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Container">Задачи</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Employees">Люди</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Teams">Команды</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Reports">Отчёты</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    @*Лого*@
+                    <div class="col-2 border border-success container-fluid align-content-end position-absolute">
+                        <img src="img/topazlog.png" class="" style="" />
+                    </div>
                 </div>
             </div>
         </nav>
