@@ -4,19 +4,19 @@ using ProjectsPlanning.Chernetsov.Entities;
 
 namespace ProjectsPlanning.Chernetsov.Configuration
 {
-    public class CategoryEntityTypeConfiguration : IEntityTypeConfiguration<Category>
+    public class PriorityEntityTypeConfiguration : IEntityTypeConfiguration<Priority>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<Priority> builder)
         {
-            builder.HasKey(category  => category.Id)
-                .HasName("PK_Categories_Id");
+            builder.HasKey(priority => priority.Id)
+                .HasName("PK_Priorities_Id");
 
-            builder.Property(category => category.Name)
+            builder.Property(priority => priority.Name)
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasColumnType("nvarchar");
 
-            builder.Property(category => category.Description)
+            builder.Property(priority => priority.Description)
                 .IsRequired()
                 .HasMaxLength(500)
                 .HasColumnType("nvarchar");

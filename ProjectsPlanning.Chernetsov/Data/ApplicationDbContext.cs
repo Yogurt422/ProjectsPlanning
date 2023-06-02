@@ -21,6 +21,7 @@ namespace ProjectsPlanning.Chernetsov.Data
         public DbSet<Plan> Plans { get; set; }
         public DbSet<PlanTask> PlanTasks { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Priority> Priorities { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Entities.Task> Tasks { get; set; }
         public DbSet<TaskType> TaskTypes { get; set; }

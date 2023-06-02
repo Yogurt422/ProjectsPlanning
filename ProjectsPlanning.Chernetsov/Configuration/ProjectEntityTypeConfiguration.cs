@@ -16,7 +16,10 @@ namespace ProjectsPlanning.Chernetsov.Configuration
                 .HasMaxLength(50)
                 .HasColumnType("nvarchar");
 
-            builder.Property(project => project.DeadLine)
+            builder.Property(project => project.CreateDate)
+                .HasColumnType("date");
+
+            builder.Property(project => project.DueDate)
                 .HasColumnType("date");
 
             builder.HasOne(project => project.Company)
@@ -29,6 +32,12 @@ namespace ProjectsPlanning.Chernetsov.Configuration
                 .WithMany(c => c.Projects)
                 .HasForeignKey(project => project.CategoryId)
                 .HasConstraintName("FK_Projects_CategoryId_Categories_Id")
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(project => project.Priority)
+                .WithMany(priority => priority.Projects)
+                .HasForeignKey(project => project.PriorityId)
+                .HasConstraintName("FK_Projects_PriorityId_Priorities_Id")
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(project => project.Status)
