@@ -10,21 +10,20 @@
     <link rel="stylesheet" href="~/css/container.css" />
     
 </head>
-<body>
+<body style="background-color: #e5e7e8;">
                             @*-------------------------Верх@*-------------------------*@
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm border-bottom navbar-toggleable-sm navbar-light box-shadow mb-3" style="background-color: #dcdfe0;">
             <div class="container-fluid">
                 <div class="row container-fluid justify-content-end">
                     @*Название и переходы*@
-                    <div class="col-4 border border-warning container-fluid align-content-center">
+                    <div class="col-4 container-fluid align-content-center">
                         @*Название*@
-                        <div class="row border border-warning text-center">
-                            <h1>ООО"Топаз"</h1>
-                            <h2>Планирование выполнения проектов</h2>
+                        <div class="row text-center">
+                            <h1>Планирование выполнения проектов</h1>
                         </div>
                         @*Переходы*@
-                        <div class="row border border-warning">
+                        <div class="row">
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                                 <ul class="navbar-nav flex-grow-1 justify-content-center">
                                     <li class="nav-item">
@@ -46,22 +45,18 @@
                             </div>
                         </div>
                     </div>
-                    @*Лого*@
-                    <div class="col-2 border border-success container-fluid align-content-end position-absolute">
-                        <img src="img/topazlog.png" class="" style="" />
-                    </div>
                 </div>
             </div>
         </nav>
     </header>
                             @*-------------------------Тело@*-------------------------*@                  
-    <div class="wrapper container">
+    <div class="wrapper container" >
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
                             @*-------------------------Низ@*-------------------------*@
-    <footer class="border-top footer text-muted">
+    <footer class="border-top fixed-bottom footer text-muted">
         <div class="container">
             &copy; 2023 - Планирование выполнения проектов - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>

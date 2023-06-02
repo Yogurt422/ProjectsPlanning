@@ -202,6 +202,33 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Priority", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id")
+                        .HasName("PK_Priorities_Id");
+
+                    b.ToTable("Priorities");
+                });
+
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -216,7 +243,10 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DeadLine")
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("DueDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
@@ -227,6 +257,9 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("PriorityId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
@@ -236,6 +269,8 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("PriorityId");
 
                     b.HasIndex("StatusId");
 
@@ -277,13 +312,13 @@ namespace ProjectsPlanning.Chernetsov.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DeadLine")
-                        .HasColumnType("date");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -293,6 +328,9 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("PriorityId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
@@ -301,6 +339,8 @@ namespace ProjectsPlanning.Chernetsov.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_Tasks_Id");
+
+                    b.HasIndex("PriorityId");
 
                     b.HasIndex("StatusId");
 
@@ -445,6 +485,13 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Projects_CompanyId_Companies_Id");
 
+                    b.HasOne("ProjectsPlanning.Chernetsov.Entities.Priority", "Priority")
+                        .WithMany("Projects")
+                        .HasForeignKey("PriorityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("FK_Projects_PriorityId_Priorities_Id");
+
                     b.HasOne("ProjectsPlanning.Chernetsov.Entities.Status", "Status")
                         .WithMany("Projects")
                         .HasForeignKey("StatusId")
@@ -456,11 +503,20 @@ namespace ProjectsPlanning.Chernetsov.Migrations
 
                     b.Navigation("Company");
 
+                    b.Navigation("Priority");
+
                     b.Navigation("Status");
                 });
 
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Task", b =>
                 {
+                    b.HasOne("ProjectsPlanning.Chernetsov.Entities.Priority", "Priority")
+                        .WithMany("Tasks")
+                        .HasForeignKey("PriorityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("FK_Tasks_PriorityId_Priorities_Id");
+
                     b.HasOne("ProjectsPlanning.Chernetsov.Entities.Status", "Status")
                         .WithMany("Tasks")
                         .HasForeignKey("StatusId")
@@ -474,6 +530,8 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_Tasks_TaskTypeId_TaskTypes_Id");
+
+                    b.Navigation("Priority");
 
                     b.Navigation("Status");
 
@@ -516,6 +574,13 @@ namespace ProjectsPlanning.Chernetsov.Migrations
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Post", b =>
                 {
                     b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Priority", b =>
+                {
+                    b.Navigation("Projects");
+
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Project", b =>

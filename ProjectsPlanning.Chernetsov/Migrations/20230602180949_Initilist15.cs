@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectsPlanning.Chernetsov.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initilist15 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,6 +38,21 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Posts_Id", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Priorities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Priorities_Id", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,13 +94,19 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    DeadLine = table.Column<DateTime>(type: "date", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "date", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
-                    TaskTypeId = table.Column<int>(type: "int", nullable: false)
+                    TaskTypeId = table.Column<int>(type: "int", nullable: false),
+                    PriorityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tasks_Id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tasks_PriorityId_Priorities_Id",
+                        column: x => x.PriorityId,
+                        principalTable: "Priorities",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tasks_StatusId_Statuses_Id",
                         column: x => x.StatusId,
@@ -122,10 +143,12 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DeadLine = table.Column<DateTime>(type: "date", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "date", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "date", nullable: false),
                     CompanyId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    StatusId = table.Column<int>(type: "int", nullable: false)
+                    StatusId = table.Column<int>(type: "int", nullable: false),
+                    PriorityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,6 +162,11 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         name: "FK_Projects_CompanyId_Companies_Id",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Projects_PriorityId_Priorities_Id",
+                        column: x => x.PriorityId,
+                        principalTable: "Priorities",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Projects_StatusId_Statuses_Id",
@@ -276,9 +304,19 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Projects_PriorityId",
+                table: "Projects",
+                column: "PriorityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Projects_StatusId",
                 table: "Projects",
                 column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_PriorityId",
+                table: "Tasks",
+                column: "PriorityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_StatusId",
@@ -338,6 +376,9 @@ namespace ProjectsPlanning.Chernetsov.Migrations
 
             migrationBuilder.DropTable(
                 name: "Companies");
+
+            migrationBuilder.DropTable(
+                name: "Priorities");
 
             migrationBuilder.DropTable(
                 name: "Statuses");
