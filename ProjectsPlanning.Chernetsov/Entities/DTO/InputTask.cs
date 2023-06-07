@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.Primitives;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace ProjectsPlanning.Chernetsov.Entities.DTO
 {
-
-    public class InputProject
+    //1
+    //Для того чтобы создать форму для начала надо создать InputModel, который будет хранить в себе входные данные от пользователя, там мы прописываем
+    //Дата аннотации (проверки)
+    public class InputTask
     {
         [Required]
         [StringLength(100, ErrorMessage = "Максимальная длина {1}")]
@@ -17,20 +19,16 @@ namespace ProjectsPlanning.Chernetsov.Entities.DTO
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Категория")]
-        public string SelectedValueCategory { get; set; }
+        [Display(Name = "Тип задачи")]
+        public string SelectedValueTaskType { get; set; }
 
         [Required]
         [Display(Name = "Приоритет")]
         public string SelectedValuePriority { get; set; }
 
         [Required]
-        [Display(Name = "Команды")]
-        public string SelectedValueTeam { get; set; }
-
-        [Required]
         [Display(Name = "Дата окончания")]
         [DataType(DataType.Date, ErrorMessage = "Не правильная дата окончания")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DueDate { get; set; }
     }
 }

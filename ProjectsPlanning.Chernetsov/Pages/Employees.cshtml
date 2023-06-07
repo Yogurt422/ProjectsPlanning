@@ -1,0 +1,108 @@
+﻿@page
+@model ProjectsPlanning.Chernetsov.Pages.EmployeesModel
+@{}
+
+<div class="container">
+    <div class="row mb-3 text-center">
+        <h4 class="page-title ">
+            Список сотрудников
+            <a href="#" data-bs-toggle="modal" data-bs-target="#create-employee-modal" class="btn btn-success btn-sm ms-3">Добавить</a>
+        </h4>
+    </div>
+    @*------------------Блок------------------*@
+    <div class="row">
+        <div class="card shadow text-dark bg-light mb-3" style="">
+            <div class="card-header">Список сотрудников</div>
+            <div class="card-body">
+                @*------------------Карточка сотрудника------------------*@
+                <div class="card shadow text-dark bg-light" style="">
+                    <div class="card-body py-3 px-3">
+                        <small class="float-end text-muted">Дата рождения</small>
+                        <h5 class="card-title my-2" style="font-size: 1.2rem;">
+                        Имя и фамилия
+                        </h5>
+                        <div class="float-end" style="">
+                            <a href="#" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#employee-change-modal">
+                                Редактирование
+                            </a>
+                            <a href="#" class="btn btn-danger btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#employee-delete-modal">
+                                Удалить
+                            </a>
+                        </div>
+                        <span class="text-muted">Должность</span>
+                        <br />
+                        <span class="text-muted">Команда</span>
+                    </div>
+                </div>
+                @*------------------Карточки сотрудника------------------*@
+            </div>
+        </div>
+    </div>
+    @*------------------Блок------------------*@
+</div>
+
+@*--------------------Изменение------------------------*@
+<div class="modal fade" id="employee-change-modal" tabindex="-1" aria-labelledby="employee-change-modalLabes" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="employee-change-modalLabel" style="font-size: 1.125rem;">
+                    Здесь его фио
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="p-2">
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-4">
+                                <h5>Должность</h5>
+                                <p>Название</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-4">
+                                <h5>Опыт работы</h5>
+                                <p>число</p>
+                            </div>
+                        </div>
+                         <div class="col">
+                            <div class="mb-4">
+                                <h5>Команда</h5>
+                                <p>Название</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn-success">Сохранить</button>
+                <button type="button" class="btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*--------------------Изменение-----------------------*@
+@*--------------------Удаление------------------------*@
+<div class="modal fade" id="employee-delete-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="employee-delete-modalLabes" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="employee-delete-modalLabel" style="font-size: 1.125rem;">
+                    Удаление сотрудника
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="p-2">
+                    <h5 class="mt-0">Вы уверены что хотите удалить сотрудника?</h5>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn-danger">Удалить</button>
+                <button type="button" class="btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*--------------------Удаление-----------------------*@
