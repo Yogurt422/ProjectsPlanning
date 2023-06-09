@@ -25,7 +25,7 @@ namespace ProjectsPlanning.Chernetsov
                         Name = "Программист",
                         Description = "Специалист, занимающийся разработкой алгоритмов и компьютерных программ с помощью написания исходного кода, поиска ошибок и добавления функций с учетом поставленной задачи.",
                         Responsibilities = "Делать всё, что не делает директор"
-                    },
+                    }
                 };
                 await dbContext.Posts.AddRangeAsync(posts);
                 await dbContext.SaveChangesAsync();

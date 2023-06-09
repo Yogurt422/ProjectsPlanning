@@ -7,7 +7,6 @@
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int Experience { get; set; }
 
         public int PostId { get; set; }
         public int TeamId { get; set; }

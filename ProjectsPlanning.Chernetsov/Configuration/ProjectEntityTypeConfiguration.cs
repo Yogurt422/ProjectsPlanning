@@ -46,6 +46,12 @@ namespace ProjectsPlanning.Chernetsov.Configuration
                 .HasConstraintName("FK_Projects_StatusId_Statuses_Id")
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.HasOne(project => project.Team)
+                .WithMany(t => t.Projects)
+                .HasForeignKey(project => project.TeamId)
+                .HasConstraintName("FK_Projects_TeamId_Teams_Id")
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.HasOne(project => project.Plan)
                 .WithOne(plan => plan.Project)
                 .HasForeignKey<Plan>(project => project.ProjectId)

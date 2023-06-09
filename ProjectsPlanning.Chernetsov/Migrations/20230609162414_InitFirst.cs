@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectsPlanning.Chernetsov.Migrations
 {
-    public partial class InitialFirst : Migration
+    public partial class InitFirst : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -125,6 +125,20 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TaskTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teams_Id", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -268,6 +282,33 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PostId = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees_Id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_PostId_Posts_Id",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Employees_TeamId_Teams_Id",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
                 {
@@ -281,6 +322,11 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies_Id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_CompanyId_Companies_Id",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -296,7 +342,8 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     CompanyId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
-                    PriorityId = table.Column<int>(type: "int", nullable: false)
+                    PriorityId = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -321,6 +368,11 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         column: x => x.StatusId,
                         principalTable: "Statuses",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Projects_TeamId_Teams_Id",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -338,26 +390,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     table.PrimaryKey("PK_Plans_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Projects_PlanId_Plans_Id",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Teams",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teams_Id", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Teams_ProjectId_Projects_Id",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id");
@@ -383,34 +415,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         name: "FK_PlanTasks_TaskId_Tasks_Id",
                         column: x => x.TaskId,
                         principalTable: "Tasks",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Employees",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Experience = table.Column<int>(type: "integer", nullable: false),
-                    PostId = table.Column<int>(type: "int", nullable: false),
-                    TeamId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees_Id", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Employees_PostId_Posts_Id",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Employees_TeamId_Teams_Id",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
                         principalColumn: "Id");
                 });
 
@@ -501,6 +505,11 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Projects_TeamId",
+                table: "Projects",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tasks_PriorityId",
                 table: "Tasks",
                 column: "PriorityId");
@@ -514,26 +523,10 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 name: "IX_Tasks_TaskTypeId",
                 table: "Tasks",
                 column: "TaskTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Teams_ProjectId",
-                table: "Teams",
-                column: "ProjectId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Employees_CompanyId_Companies_Id",
-                table: "Companies",
-                column: "EmployeeId",
-                principalTable: "Employees",
-                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Employees_CompanyId_Companies_Id",
-                table: "Companies");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -565,19 +558,10 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 name: "Tasks");
 
             migrationBuilder.DropTable(
-                name: "TaskTypes");
-
-            migrationBuilder.DropTable(
-                name: "Employees");
-
-            migrationBuilder.DropTable(
-                name: "Posts");
-
-            migrationBuilder.DropTable(
-                name: "Teams");
-
-            migrationBuilder.DropTable(
                 name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "TaskTypes");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -590,6 +574,15 @@ namespace ProjectsPlanning.Chernetsov.Migrations
 
             migrationBuilder.DropTable(
                 name: "Statuses");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
+
+            migrationBuilder.DropTable(
+                name: "Teams");
         }
     }
 }

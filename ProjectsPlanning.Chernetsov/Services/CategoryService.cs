@@ -16,13 +16,11 @@ namespace ProjectsPlanning.Chernetsov.Services
             _context.Categories.Add(newCategory);
             _context.SaveChanges();
         }
-
         public List<Category> GetAllCategory()
         {
             return _context.Categories
                 .Where(c => c.IsDeleted == false)
                 .ToList();
-            
         }
     }
 }

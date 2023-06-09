@@ -7,10 +7,7 @@
 
         public string Name { get; set; }
 
-        public int ProjectId { get; set; }
-
-        public Project Project { get; set; }
-
+        public ICollection<Project> Projects { get; set; }
         public ICollection<Employee> Employees { get; set; }
     }
 }

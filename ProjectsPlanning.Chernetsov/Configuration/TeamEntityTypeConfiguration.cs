@@ -15,12 +15,6 @@ namespace ProjectsPlanning.Chernetsov.Configuration
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasColumnType("nvarchar");
-
-            builder.HasOne(tea => tea.Project)
-                .WithMany(p => p.Teams)
-                .HasForeignKey(tea => tea.ProjectId)
-                .HasConstraintName("FK_Teams_ProjectId_Projects_Id")
-                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

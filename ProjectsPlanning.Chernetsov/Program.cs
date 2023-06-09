@@ -41,6 +41,12 @@ await SeedDataTaskType.EnsureSeedData(scope.ServiceProvider);
 
 await SeedDataPost.EnsureSeedData(scope.ServiceProvider);
 
+await SeedDataStatus.EnsureSeedData(scope.ServiceProvider);
+
+await SeedDataPriority.EnsureSeedData(scope.ServiceProvider);
+
+await SeedDataTeam.EnsureSeedData(scope.ServiceProvider);
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

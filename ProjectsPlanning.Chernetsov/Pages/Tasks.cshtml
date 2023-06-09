@@ -7,7 +7,10 @@
     <div class="row mb-3 text-center">
         <h4 class="page-title ">
             Список задач
-            <a href="#" data-bs-toggle="modal" data-bs-target="#create-task-modal" class="btn btn-success btn-sm ms-3">Добавить</a>
+            @if (User.IsInRole("Администратор"))
+            {
+                <a href="#" data-bs-toggle="modal" data-bs-target="#create-task-modal" class="btn btn-success btn-sm ms-3">Добавить</a>
+            }
         </h4>
     </div>
     <div class="row">
@@ -24,14 +27,17 @@
                             <h5 class="card-title my-2" style="font-size: 1.2rem;">
                                 <a href="#" class="text-body text-decoration-none" data-bs-toggle="modal" data-bs-target="#task-detail-modal">Закупка окон</a>
                             </h5>
-                            <div class="float-end" style="">
-                                <a href="#" class="text-decoration-none me-2" data-bs-toggle="modal" data-bs-target="#task-change-modal">
-                                    <img src="img/pencil.png" style="max-height:15px;" />
-                                </a>
-                                <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#task-delete-modal">
-                                    <img src="img/trash.png" style="max-height:15px;" />
-                                </a>
-                            </div>
+                            @if (User.IsInRole("Администратор"))
+                            {
+                                <div class="float-end" style="">
+                                    <a href="#" class="text-decoration-none me-2" data-bs-toggle="modal" data-bs-target="#task-change-modal">
+                                        <img src="img/pencil.png" style="max-height:15px;" />
+                                    </a>
+                                    <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#task-delete-modal">
+                                        <img src="img/trash.png" style="max-height:15px;" />
+                                    </a>
+                                </div>
+                            }
                             <span class="text-muted">Тип задачи</span>
                         </div>
                     </div>
@@ -54,11 +60,11 @@
 
         @*--------------------Готовые----------------------*@
         <div class="col">
-            <div class="card shadow text-dark bg-light mb-3" style="">
+            <div class="card shadow text-dark bg-light mb-3" style="min-height: 150px">
                 <div class="card-header">Готовые</div>
                 <div class="card-body">
-                    <h5 class="card-title">Light Заголовок карточки</h5>
-                    <p class="card-text">Несколько быстрых примеров текста для построения на основе Заголовок карточки и составления основной части содержимого карточки.</p>
+                    <h5 class="card-title"></h5>
+                    <p class="card-text"></p>
                 </div>
             </div>
         </div>
@@ -80,15 +86,22 @@
                         <input asp-for="Input.Name" class="form-control" id="inputTitle" />
                         <span asp-validation-for="Input.Name" style="color:darkred"></span>
                     </div>
-                    <div class="" style="display:flex">
+                    <div class="row" style="display:flex">
                         <div class="form-group col-2 mb-3 me-5">
-                            <label asp-for="Input.SelectedValueTaskType"></label>
-                            <select class="mt-2" asp-for="Input.SelectedValueTaskType" asp-items="Model.CategoryItems"></select>
+                            <label asp-for="Input.SelectedValueTaskType">Категория</label>
+                            <select class="mt-2" asp-for="Input.SelectedValueTaskType"></select>
                         </div>
                         <div class="form-group col-2 mb-3 ms-5 me-5">
                             <label asp-for="Input.SelectedValuePriority"></label>
-                            <select class="mt-2" asp-for="Input.SelectedValuePriority" asp-items="Model.PriorityItems"></select>
+                            <select class="mt-2" asp-for="Input.SelectedValuePriority"></select>
                         </div>
+                        <div class="form-group col-2 mb-3 ms-5 me-5">
+                            <label asp-for="Input.SelectedValuePriority">Проект:</label>
+                            <select class="mt-2" asp-for="Input.SelectedValuePriority"></select>
+                        </div>
+                    </div>
+                    <div class="row" style="display:flex">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#create-tasktype-modal" class="btn btn-secondary btn-sm mt-2">Добавить категорию</a>
                     </div>
                     <div class="form-group mb-3">
                         <label asp-for="Input.Description" class="col-sm-2 col-form-label"></label>
@@ -99,7 +112,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button type="submit" class="btn-secondary">Сохранить</button>
+                <button type="submit" class="btn-success">Сохранить</button>
             </div>
         </div>
       </div>
@@ -111,7 +124,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="task-detail-modalLabel" style="font-size: 1.125rem;">
-                    Добавить проект
+                    Название задачи
                     <span class="badge bg-success ms-2">Низкий</span>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
@@ -122,20 +135,10 @@
                     <p class="text-muted mb-4">
                         Само описание, сделать передачу
                     </p>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-4">
-                                <h5>Дата создания</h5>
-                                <p>Сама дата</p>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-4">
-                                <h5>Дата окончания</h5>
-                                <p>Сама дата</p>
-                            </div>
-                        </div>
-                    </div>
+                    <h5 class="mt-0">Проект</h5>
+                    <p class="mb-4">
+                        его название
+                    </p>
                     <div class="row">
                         <div class="col">
                             <div class="mb-4">
@@ -145,8 +148,8 @@
                         </div>
                         <div class="col">
                             <div class="mb-4">
-                                <h5>Команда</h5>
-                                <p>Название</p>
+                                <h5>Дата окончания</h5>
+                                <p>Сама дата</p>
                             </div>
                         </div>
                     </div>
@@ -165,7 +168,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="task-change-modalLabel" style="font-size: 1.125rem;">
-                    Добавить проект
+                    Название задачи
                     <span class="badge bg-success ms-2">Низкий</span>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
@@ -179,28 +182,14 @@
                     <div class="row">
                         <div class="col">
                             <div class="mb-4">
-                                <h5>Тип задачи</h5>
-                                <p>Название</p>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-4">
-                                <h5>Дата окончания</h5>
-                                <p>Сама дата</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-4">
                                 <h5>Приоритет</h5>
-                                <p>Название</p>
+                                <p>список</p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="mb-4">
-                                <h5>Статус</h5>
-                                <p>Название</p>
+                                <h5>Состояние</h5>
+                                <p>список</p>
                             </div>
                         </div>
                     </div>
@@ -237,3 +226,33 @@
     </div>
 </div>
 @*--------------------Удаление-----------------------*@
+@*--------------------Добавление категории----------------------*@
+<div class="modal fade" id="create-tasktype-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="create-tasktype-modalLabes" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-tasktype-modalLabel">Добавить категорию</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group mb-3">
+                        <label asp-for="Input.Name" class="col-sm-2 col-form-label"></label>
+                        <input asp-for="Input.Name" class="form-control" id="inputTitle" />
+                        <span asp-validation-for="Input.Name" style="color:darkred"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Input.Description" class="col-sm-2 col-form-label"></label>
+                        <input asp-for="Input.Description" class="form-control" id="inputTitle" />
+                        <span asp-validation-for="Input.Description" style="color:darkred"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn-success">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*--------------------Добавление----------------------*@

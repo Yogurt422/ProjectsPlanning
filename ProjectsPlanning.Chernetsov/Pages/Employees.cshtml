@@ -6,7 +6,10 @@
     <div class="row mb-3 text-center">
         <h4 class="page-title ">
             Список сотрудников
-            <a href="#" data-bs-toggle="modal" data-bs-target="#create-employee-modal" class="btn btn-success btn-sm ms-3">Добавить</a>
+            @if (User.IsInRole("Администратор"))
+            {
+                <a href="#" data-bs-toggle="modal" data-bs-target="#create-employee-modal" class="btn btn-success btn-sm ms-3">Добавить</a>
+            }
         </h4>
     </div>
     @*------------------Блок------------------*@
@@ -21,14 +24,17 @@
                         <h5 class="card-title my-2" style="font-size: 1.2rem;">
                         Имя и фамилия
                         </h5>
-                        <div class="float-end" style="">
-                            <a href="#" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#employee-change-modal">
-                                Редактирование
-                            </a>
-                            <a href="#" class="btn btn-danger btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#employee-delete-modal">
-                                Удалить
-                            </a>
-                        </div>
+                        @if (User.IsInRole("Администратор"))
+                        {
+                            <div class="float-end" style="">
+                                <a href="#" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#employee-change-modal">
+                                    Редактирование
+                                </a>
+                                <a href="#" class="btn btn-danger btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#employee-delete-modal">
+                                    Удалить
+                                </a>
+                            </div>
+                        }
                         <span class="text-muted">Должность</span>
                         <br />
                         <span class="text-muted">Команда</span>
@@ -40,7 +46,54 @@
     </div>
     @*------------------Блок------------------*@
 </div>
-
+@*--------------------Добавление------------------------*@
+<div class="modal fade" id="create-employee-modal" tabindex="-1" aria-labelledby="create-employee-modalLabes" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="create-employee-modalLabel" style="font-size: 1.125rem;">
+                    Здесь его фио
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group mb-3">
+                        <label class="col-sm-2 col-form-label">Имя</label>
+                        <input class="form-control" id="inputTitle" />
+                        <span style="color:darkred"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="col-sm-2 col-form-label">Фамилия</label>
+                        <input class="form-control" id="inputTitle" />
+                        <span style="color:darkred"></span>
+                    </div>
+                    <div class="row" style="display:flex">
+                        <div class="form-group col mb-2 me-5">
+                            <label>Должность</label>
+                            <select class="mt-2"></select>
+                        </div>
+                        <div class="form-group col mb-3 ms-5 me-5">
+                            <label>Команда</label>
+                            <select class="mt-2"></select>
+                        </div>
+                    </div>
+                    <div class="row" style="display:flex">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#create-post-modal" class="btn btn-secondary btn-sm mt-2">Добавить должность</a>
+                    </div>
+                    <div class="row" style="display:flex">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#create-team-modal" class="btn btn-secondary btn-sm mt-2">Добавить команду</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn-success">Добавить</button>
+                <button type="button" class="btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*--------------------Добавление-----------------------*@
 @*--------------------Изменение------------------------*@
 <div class="modal fade" id="employee-change-modal" tabindex="-1" aria-labelledby="employee-change-modalLabes" aria-hidden="true">
     <div class="modal-dialog">
@@ -60,12 +113,6 @@
                                 <p>Название</p>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="mb-4">
-                                <h5>Опыт работы</h5>
-                                <p>число</p>
-                            </div>
-                        </div>
                          <div class="col">
                             <div class="mb-4">
                                 <h5>Команда</h5>
@@ -73,6 +120,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row" style="display:flex">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#create-post-modal" class="btn btn-secondary btn-sm mt-2">Добавить должность</a>
+                </div>
+                <div class="row" style="display:flex">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#create-team-modal" class="btn btn-secondary btn-sm mt-2">Добавить команду</a>
                 </div>
             </div>
             <div class="modal-footer">
@@ -106,3 +159,63 @@
     </div>
 </div>
 @*--------------------Удаление-----------------------*@
+@*--------------------Добавление должности----------------------*@
+<div class="modal fade" id="create-post-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="create-post-modalLabes" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-post-modalLabel">Добавить должность</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group mb-3">
+                        <label class="col-sm-2 col-form-label">Название</label>
+                        <input class="form-control" id="inputTitle" />
+                        <span style="color:darkred"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="col-sm-2 col-form-label">Описание</label>
+                        <input class="form-control" id="inputTitle" />
+                        <span style="color:darkred"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="col-sm-2 col-form-label">Обязаности</label>
+                        <input class="form-control" id="inputTitle" />
+                        <span style="color:darkred"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn-success">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*--------------------Добавление должности----------------------*@
+@*--------------------Добавление команды----------------------*@
+<div class="modal fade" id="create-team-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="create-team-modalLabes" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-team-modalLabel">Добавить должность</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group mb-3">
+                        <label class="col-sm-2 col-form-label">Название</label>
+                        <input class="form-control" id="inputTitle" />
+                        <span style="color:darkred"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn-success">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*--------------------Добавление команды----------------------*@

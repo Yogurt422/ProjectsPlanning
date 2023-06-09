@@ -13,15 +13,13 @@
         public int CategoryId { get; set; }
         public int StatusId { get; set; }
         public int PriorityId { get; set; }
+        public int TeamId { get; set; }
 
         public Company Company { get; set; }
         public Category Category { get; set; }
         public Status Status { get; set; }
         public Priority Priority { get; set; }
+        public Team Team { get; set; }
         public Plan Plan { get; set; }
-
-        public ICollection<Team> Teams { get; set; }
-     
-
     }
 }

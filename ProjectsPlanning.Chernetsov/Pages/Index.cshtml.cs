@@ -15,23 +15,11 @@ namespace ProjectsPlanning.Chernetsov.Pages
         private readonly ITeamService _teamService;
 
         [BindProperty]
-        public InputProject Input { get; set; }
+        public InputProject InputProject { get; set; }
+        public List<SelectListItem> CategoryItems { get; set; }
+        public List<SelectListItem> PriorityItems { get; set; }
         public List<SelectListItem> TeamItems { get; set; }
         
-        public List<SelectListItem> CategoryItems { get; set; } = new List<SelectListItem>()
-        {
-            new SelectListItem { Value = "0", Text = "Отсутствует"}, 
-            new SelectListItem { Value = "1", Text = "Замена"},
-            new SelectListItem { Value = "2", Text = "Закупка"},
-            new SelectListItem { Value = "3", Text = "Сбор"}
-        };
-        public List<SelectListItem> PriorityItems { get; set; } = new List<SelectListItem>()
-        {
-            new SelectListItem { Value = "0", Text = "Отсутствует"},
-            new SelectListItem { Value = "1", Text = "Низкий"},
-            new SelectListItem { Value = "2", Text = "Средний"},
-            new SelectListItem { Value = "3", Text = "Высокий"}
-        };
 
         public IndexModel(ILogger<IndexModel> logger, IProjectsService projectsService, ICategoryService categoryService, ITeamService teamService)
 
@@ -41,7 +29,6 @@ namespace ProjectsPlanning.Chernetsov.Pages
             _categoryService = categoryService;
             _teamService = teamService;
             LoadTeams();
-            
         }
         private void LoadTeams()
         {
@@ -63,8 +50,7 @@ namespace ProjectsPlanning.Chernetsov.Pages
         {
             var project = new Project
             {
-                Name = Input.Name,
-
+                Name = InputProject.Name,
             };
             // Из класса InputProject добавить данные в переменную Project и вызвать из сервиса метод Add
             return Page();

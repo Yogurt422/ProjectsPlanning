@@ -18,21 +18,6 @@ namespace ProjectsPlanning.Chernetsov.Pages
         public InputTask Input { get; set; }
         public List<SelectListItem> TeamItems { get; set; }
 
-        public List<SelectListItem> CategoryItems { get; set; } = new List<SelectListItem>()
-        {
-            new SelectListItem { Value = "0", Text = "Отсутствует"},
-            new SelectListItem { Value = "1", Text = "Замена"},
-            new SelectListItem { Value = "2", Text = "Закупка"},
-            new SelectListItem { Value = "3", Text = "Сбор"}
-        };
-        public List<SelectListItem> PriorityItems { get; set; } = new List<SelectListItem>()
-        {
-            new SelectListItem { Value = "0", Text = "Отсутствует"},
-            new SelectListItem { Value = "1", Text = "Низкий"},
-            new SelectListItem { Value = "2", Text = "Средний"},
-            new SelectListItem { Value = "3", Text = "Высокий"}
-        };
-
         public TasksModel(ILogger<TasksModel> logger, IProjectsService projectsService, ICategoryService categoryService, ITeamService teamService)
 
         {

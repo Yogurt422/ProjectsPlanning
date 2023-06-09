@@ -227,9 +227,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Experience")
-                        .HasColumnType("integer");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -400,6 +397,9 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id")
                         .HasName("PK_Projects_Id");
 
@@ -410,6 +410,8 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.HasIndex("PriorityId");
 
                     b.HasIndex("StatusId");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Projects");
                 });
@@ -529,13 +531,8 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id")
                         .HasName("PK_Teams_Id");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("Teams");
                 });
@@ -758,6 +755,13 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Projects_StatusId_Statuses_Id");
 
+                    b.HasOne("ProjectsPlanning.Chernetsov.Entities.Team", "Team")
+                        .WithMany("Projects")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("FK_Projects_TeamId_Teams_Id");
+
                     b.Navigation("Category");
 
                     b.Navigation("Company");
@@ -765,6 +769,8 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.Navigation("Priority");
 
                     b.Navigation("Status");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Task", b =>
@@ -795,18 +801,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.Navigation("Status");
 
                     b.Navigation("TaskType");
-                });
-
-            modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Team", b =>
-                {
-                    b.HasOne("ProjectsPlanning.Chernetsov.Entities.Project", "Project")
-                        .WithMany("Teams")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired()
-                        .HasConstraintName("FK_Teams_ProjectId_Projects_Id");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Category", b =>
@@ -846,8 +840,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 {
                     b.Navigation("Plan")
                         .IsRequired();
-
-                    b.Navigation("Teams");
                 });
 
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Status", b =>
@@ -870,6 +862,8 @@ namespace ProjectsPlanning.Chernetsov.Migrations
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Team", b =>
                 {
                     b.Navigation("Employees");
+
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }

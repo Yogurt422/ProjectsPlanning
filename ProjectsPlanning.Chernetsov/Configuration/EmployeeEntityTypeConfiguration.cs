@@ -21,9 +21,6 @@ namespace ProjectsPlanning.Chernetsov.Configuration
                 .HasMaxLength(50)
                 .HasColumnType("nvarchar");
 
-            builder.Property(emp => emp.Experience)
-                .HasColumnType("integer");
-
             builder.HasOne(emp => emp.Post)
                 .WithMany(p => p.Employees)
                 .HasForeignKey(emp => emp.PostId)

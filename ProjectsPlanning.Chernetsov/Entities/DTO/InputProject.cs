@@ -31,6 +31,6 @@ namespace ProjectsPlanning.Chernetsov.Entities.DTO
         [Required]
         [Display(Name = "Дата окончания")]
         [DataType(DataType.Date, ErrorMessage = "Не правильная дата окончания")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DueDate { get; set; }
     }
 }

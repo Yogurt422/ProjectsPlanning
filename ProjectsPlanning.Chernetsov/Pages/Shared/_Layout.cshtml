@@ -29,18 +29,6 @@
                         <div class="row">
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                                 <ul class="navbar-nav flex-grow-1 justify-content-center">
-                                    @if (User.IsInRole("Администратор"))
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-page="/Category">Катерогии проектов</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-page="/TaskType">Категории задач</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-page="/Post">Должности</a>
-                                        </li>
-                                    }
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-page="/Index">Проекты</a>
                                     </li>
@@ -50,19 +38,10 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-page="/Employees">Список сотрудников</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Teams">Команды</a>
-                                    </li>
                                 </ul>
-                               
-                                       
-                                    
                             </div>
-                            
-                        </div>
-                        
-                    </div>
-                    
+                        </div>  
+                    </div> 
                 </div>
                 <div style="position:absolute; top:72%; right:0%;">
                     <partial name="_LoginPartial" />
