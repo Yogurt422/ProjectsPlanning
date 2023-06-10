@@ -19,7 +19,7 @@ namespace ProjectsPlanning.Chernetsov.Data
         }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Company> Companies { get; set; }
+        //public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Plan> Plans { get; set; }
         public DbSet<PlanTask> PlanTasks { get; set; }

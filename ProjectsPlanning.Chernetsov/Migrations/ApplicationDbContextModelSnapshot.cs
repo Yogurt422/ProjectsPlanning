@@ -186,39 +186,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Company", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id")
-                        .HasName("PK_Companies_Id");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
-
-                    b.ToTable("Companies");
-                });
-
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -374,9 +341,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
 
@@ -404,8 +368,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .HasName("PK_Projects_Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasIndex("PriorityId");
 
@@ -659,18 +621,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Company", b =>
-                {
-                    b.HasOne("ProjectsPlanning.Chernetsov.Entities.Employee", "Employee")
-                        .WithOne("Company")
-                        .HasForeignKey("ProjectsPlanning.Chernetsov.Entities.Company", "EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired()
-                        .HasConstraintName("FK_Employees_CompanyId_Companies_Id");
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Employee", b =>
                 {
                     b.HasOne("ProjectsPlanning.Chernetsov.Entities.Post", "Post")
@@ -734,13 +684,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Projects_CategoryId_Categories_Id");
 
-                    b.HasOne("ProjectsPlanning.Chernetsov.Entities.Company", "Company")
-                        .WithMany("Projects")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired()
-                        .HasConstraintName("FK_Projects_CompanyId_Companies_Id");
-
                     b.HasOne("ProjectsPlanning.Chernetsov.Entities.Priority", "Priority")
                         .WithMany("Projects")
                         .HasForeignKey("PriorityId")
@@ -763,8 +706,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         .HasConstraintName("FK_Projects_TeamId_Teams_Id");
 
                     b.Navigation("Category");
-
-                    b.Navigation("Company");
 
                     b.Navigation("Priority");
 
@@ -806,17 +747,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Category", b =>
                 {
                     b.Navigation("Projects");
-                });
-
-            modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Company", b =>
-                {
-                    b.Navigation("Projects");
-                });
-
-            modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Employee", b =>
-                {
-                    b.Navigation("Company")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProjectsPlanning.Chernetsov.Entities.Plan", b =>

@@ -9,13 +9,13 @@
         public DateTime CreateDate { get; set; }
         public DateTime DueDate { get; set; }
 
-        public int CompanyId { get; set; }
+        //public int CompanyId { get; set; }
         public int CategoryId { get; set; }
         public int StatusId { get; set; }
         public int PriorityId { get; set; }
         public int TeamId { get; set; }
 
-        public Company Company { get; set; }
+        //public Company Company { get; set; }
         public Category Category { get; set; }
         public Status Status { get; set; }
         public Priority Priority { get; set; }

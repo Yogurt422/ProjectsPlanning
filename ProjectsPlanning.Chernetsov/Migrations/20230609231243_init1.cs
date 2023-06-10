@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectsPlanning.Chernetsov.Migrations
 {
-    public partial class InitFirst : Migration
+    public partial class init1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -309,27 +309,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Companies",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Companies_Id", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Employees_CompanyId_Companies_Id",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
@@ -339,7 +318,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "date", nullable: false),
                     DueDate = table.Column<DateTime>(type: "date", nullable: false),
-                    CompanyId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
                     PriorityId = table.Column<int>(type: "int", nullable: false),
@@ -352,11 +330,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                         name: "FK_Projects_CategoryId_Categories_Id",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Projects_CompanyId_Companies_Id",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Projects_PriorityId_Priorities_Id",
@@ -458,12 +431,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Companies_EmployeeId",
-                table: "Companies",
-                column: "EmployeeId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Employees_PostId",
                 table: "Employees",
                 column: "PostId");
@@ -488,11 +455,6 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 name: "IX_Projects_CategoryId",
                 table: "Projects",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Projects_CompanyId",
-                table: "Projects",
-                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_PriorityId",
@@ -543,6 +505,9 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
                 name: "PlanTasks");
 
             migrationBuilder.DropTable(
@@ -550,6 +515,9 @@ namespace ProjectsPlanning.Chernetsov.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "Plans");
@@ -567,19 +535,10 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Companies");
-
-            migrationBuilder.DropTable(
                 name: "Priorities");
 
             migrationBuilder.DropTable(
                 name: "Statuses");
-
-            migrationBuilder.DropTable(
-                name: "Employees");
-
-            migrationBuilder.DropTable(
-                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "Teams");

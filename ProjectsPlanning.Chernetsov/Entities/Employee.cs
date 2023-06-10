@@ -13,7 +13,7 @@
 
         public Post Post { get; set; }
         public Team Team { get; set; }
-        public Company Company { get; set; }
+        //public Company Company { get; set; }
 
     }
 }

@@ -14,6 +14,7 @@ builder.Services.AddRazorPages()
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<IPriorityService, PriorityService>();
 
 var configuration = builder.Configuration;
 

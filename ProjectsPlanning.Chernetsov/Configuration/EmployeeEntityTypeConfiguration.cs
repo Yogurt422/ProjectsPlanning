@@ -33,11 +33,11 @@ namespace ProjectsPlanning.Chernetsov.Configuration
                 .HasConstraintName("FK_Employees_TeamId_Teams_Id")
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(emp => emp.Company)
-                .WithOne(c => c.Employee)
-                .HasForeignKey<Company>(emp => emp.EmployeeId)
-                .HasConstraintName("FK_Employees_CompanyId_Companies_Id")
-                .OnDelete(DeleteBehavior.NoAction);
+                //builder.HasOne(emp => emp.Company)
+                //    .WithOne(c => c.Employee)
+                //    .HasForeignKey<Company>(emp => emp.EmployeeId)
+                //    .HasConstraintName("FK_Employees_CompanyId_Companies_Id")
+                //    .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -22,11 +22,11 @@ namespace ProjectsPlanning.Chernetsov.Configuration
             builder.Property(project => project.DueDate)
                 .HasColumnType("date");
 
-            builder.HasOne(project => project.Company)
-                .WithMany(c => c.Projects)
-                .HasForeignKey(project => project.CompanyId)
-                .HasConstraintName("FK_Projects_CompanyId_Companies_Id")
-                .OnDelete(DeleteBehavior.NoAction);
+            //builder.HasOne(project => project.Company)
+            //    .WithMany(c => c.Projects)
+            //    .HasForeignKey(project => project.CompanyId)
+            //    .HasConstraintName("FK_Projects_CompanyId_Companies_Id")
+            //    .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(project => project.Category)
                 .WithMany(c => c.Projects)

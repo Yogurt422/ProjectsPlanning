@@ -18,15 +18,15 @@ namespace ProjectsPlanning.Chernetsov.Entities.DTO
 
         [Required]
         [Display(Name = "Категория")]
-        public string SelectedValueCategory { get; set; }
+        public int SelectedValueCategory { get; set; }
 
         [Required]
         [Display(Name = "Приоритет")]
-        public string SelectedValuePriority { get; set; }
+        public int SelectedValuePriority { get; set; }
 
         [Required]
         [Display(Name = "Команды")]
-        public string SelectedValueTeam { get; set; }
+        public int SelectedValueTeam { get; set; }
 
         [Required]
         [Display(Name = "Дата окончания")]
