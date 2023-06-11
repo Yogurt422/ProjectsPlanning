@@ -289,8 +289,7 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("nvarchar");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Responsibilities")
                         .IsRequired()
@@ -343,6 +342,11 @@ namespace ProjectsPlanning.Chernetsov.Migrations
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("date");

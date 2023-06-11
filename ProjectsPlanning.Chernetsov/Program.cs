@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ProjectsPlanning.Chernetsov;
 using ProjectsPlanning.Chernetsov.Data;
 using ProjectsPlanning.Chernetsov.Entities;
+using ProjectsPlanning.Chernetsov.SeedData;
 using ProjectsPlanning.Chernetsov.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +15,7 @@ builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<IPriorityService, PriorityService>();
+builder.Services.AddScoped<IStatusService, StatusService>();
 
 var configuration = builder.Configuration;
 
@@ -34,7 +35,7 @@ var app = builder.Build();
 
 using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
 
-await SeedData.EnsureSeedData(scope.ServiceProvider);
+await SeedDataRole.EnsureSeedData(scope.ServiceProvider);
 
 await SeedDataCategory.EnsureSeedData(scope.ServiceProvider);
 

@@ -17,7 +17,7 @@
     <div class="row">
         @*------------------Запланированы------------------*@
         <div class="col">
-            <div class="card shadow text-dark bg-light mb-3" style="">
+            <div class="card shadow text-dark bg-light mb-3" style="min-height: 150px">
                 <div class="card-header">Запланированы</div>
                 <div class="card-body">
                     @*------------------Карточки проектов------------------*@
@@ -44,13 +44,39 @@
                                 </h5>
                                 @if (User.IsInRole("Администратор"))
                                 {   
-                                    <div class="float-end" style="">
-                                        <a  href="#" class="text-decoration-none me-2" data-bs-toggle="modal" data-bs-target="#project-change-modal">
-                                            <img src="img/pencil.png" style="max-height:15px;" />
-                                        </a>
-                                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#project-delete-modal">
-                                            <img src="img/trash.png" style="max-height:15px;" />
-                                        </a>
+                                    <div class="float-end" d-flex style="">
+                                        <form 
+                                          method="post" 
+                                          asp-page-handler="ReceiveProject"
+                                          asp-route-id="@item.Id"
+                                          data-ajax="true"
+                                          data-ajax-method="post"
+                                          data-ajax-loading="#loading"
+                                          data-ajax-mode="before"
+                                          data-ajax-update="#editDiv">
+                                            <button type="submit" 
+                                                class="text-decoration-none me-2 position-absolute" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#project-change-modal" 
+                                                style="background: none; border: none; right:10%;padding: 0; font: inherit; cursor: pointer;">
+                                                <img src="img/pencil.png" style="max-height:15px;" />
+                                            </button>
+                                        </form>
+                                     
+                                        <form method="post"
+                                         asp-page-handler="ReturnPartialDeleteProject"
+                                         asp-route-id="@item.Id"
+                                         data-ajax="true"
+                                         data-ajax-method="post"
+                                         data-ajax-loading="#loading"
+                                         data-ajax-mode="before"
+                                         data-ajax-update="#deleteDiv">
+                                            <button type="submit" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#project-delete-modal"
+                                            style="background: none; border: none;padding: 0; font: inherit; cursor: pointer;">
+                                                <img src="img/trash.png" style="max-height:15px;" />
+                                            </button>
+                                        </form>
+                                        
                                     </div>
                                 }
                                 <span class="text-muted">@item.Team.Name</span>
@@ -70,7 +96,65 @@
             <div class="card shadow text-dark bg-light mb-3" style="min-height: 150px">
                 <div class="card-header">В работе</div>
                 <div class="card-body">
-                    
+                    @foreach (var item in Model.ProjectsIdTwo)
+                    {
+                        <div class="card shadow text-dark bg-light mb-2" style="">
+                            <div class="card-body py-3 px-3">
+                                <small class="float-end text-muted">@item.DueDate.ToShortDateString()</small>
+                                @if (item.PriorityId == 1)
+                                {
+                                    <span class="badge bg-success">@item.Priority.Name</span>
+                                }
+                                @if (item.PriorityId == 2)
+                                {
+                                    <span class="badge bg-warning">@item.Priority.Name</span>
+                                }
+                                @if (item.PriorityId == 3)
+                                {
+                                    <span class="badge bg-danger">@item.Priority.Name</span>
+                                }
+                                <h5 class="card-title my-2" style="font-size: 1.2rem;">
+                                    <a href="#" class="text-body text-decoration-none" data-bs-toggle="modal" data-bs-target="#project-detail-modal">@item.Name</a>
+                                </h5>
+                                @if (User.IsInRole("Администратор"))
+                                {
+                                    <div class="float-end" d-flex style="">
+                                        <form method="post"
+                                            asp-page-handler="ReceiveProject"
+                                            asp-route-id="@item.Id"
+                                            data-ajax="true"
+                                            data-ajax-method="post"
+                                            data-ajax-loading="#loading"
+                                            data-ajax-mode="before"
+                                            data-ajax-update="#editDiv">
+                                            <button type="submit"
+                                            class="text-decoration-none me-2 position-absolute"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#project-change-modal"
+                                            style="background: none; border: none; right:10%;padding: 0; font: inherit; cursor: pointer;">
+                                                <img src="img/pencil.png" style="max-height:15px;" />
+                                            </button>
+                                        </form>
+                                        <form method="post"
+                                            asp-page-handler="ReturnPartialDeleteProject"
+                                            asp-route-id="@item.Id"
+                                            data-ajax="true"
+                                            data-ajax-method="post"
+                                            data-ajax-loading="#loading"
+                                            data-ajax-mode="before"
+                                            data-ajax-update="#deleteDiv">
+                                            <button type="submit" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#project-delete-modal"
+                                            style="background: none; border: none;padding: 0; font: inherit; cursor: pointer;">
+                                                <img src="img/trash.png" style="max-height:15px;" />
+                                            </button>
+                                        </form>
+                                    </div>
+                                }
+                                <span class="text-muted">@item.Team.Name</span>
+                            </div>
+                        </div>
+
+                    }
                 </div>
             </div>
         </div>
@@ -81,7 +165,68 @@
             <div class="card shadow text-dark bg-light mb-3" style="min-height: 150px">
                 <div class="card-header">Готовые</div>
                 <div class="card-body">
-                    
+                    @foreach(var item in Model.ProjectsIdThree)
+                    {
+                        <div class="card shadow text-dark bg-light mb-2" style="">
+                            <div class="card-body py-3 px-3">
+                                <small class="float-end text-muted">@item.DueDate.ToShortDateString()</small>
+                                @if (item.PriorityId == 1)
+                                {
+                                    <span class="badge bg-success">@item.Priority.Name</span>
+                                }
+                                @if (item.PriorityId == 2)
+                                {
+                                    <span class="badge bg-warning">@item.Priority.Name</span>
+                                }
+                                @if (item.PriorityId == 3)
+                                {
+                                    <span class="badge bg-danger">@item.Priority.Name</span>
+                                }
+                                <h5 class="card-title my-2" style="font-size: 1.2rem;">
+                                    <a href="#" class="text-body text-decoration-none" data-bs-toggle="modal" data-bs-target="#project-detail-modal">@item.Name</a>
+                                </h5>
+                                @if (User.IsInRole("Администратор"))
+                                {   
+                                    <div class="float-end" d-flex style="">
+                                        <form 
+                                          method="post" 
+                                          asp-page-handler="ReceiveProject"
+                                          asp-route-id="@item.Id"
+                                          data-ajax="true"
+                                          data-ajax-method="post"
+                                          data-ajax-loading="#loading"
+                                          data-ajax-mode="before"
+                                          data-ajax-update="#editDiv">
+                                            <button type="submit" 
+                                                class="text-decoration-none me-2 position-absolute" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#project-change-modal" 
+                                                style="background: none; border: none; right:10%;padding: 0; font: inherit; cursor: pointer;">
+                                                <img src="img/pencil.png" style="max-height:15px;" />
+                                            </button>
+                                        </form>
+                                     
+                                        <form method="post"
+                                              asp-page-handler="ReturnPartialDeleteProject"
+                                              asp-route-id="@item.Id"
+                                              data-ajax="true"
+                                              data-ajax-method="post"
+                                              data-ajax-loading="#loading"
+                                              data-ajax-mode="before"
+                                              data-ajax-update="#deleteDiv">
+                                            <button type="submit" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#project-delete-modal"
+                                            style="background: none; border: none;padding: 0; font: inherit; cursor: pointer;">
+                                                <img src="img/trash.png" style="max-height:15px;" />
+                                            </button>
+                                        </form>
+                                        
+                                    </div>
+                                }
+                                <span class="text-muted">@item.Team.Name</span>
+                            </div>
+                        </div>
+                        
+                    }
                 </div>
             </div>
         </div>
@@ -202,82 +347,15 @@
 @*--------------------Просмотр-----------------------*@
 @*--------------------Изменение------------------------*@
 <div class="modal fade" id="project-change-modal" tabindex="-1" aria-labelledby="project-change-modalLabes" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="project-change-modalLabel" style="font-size: 1.125rem;">
-                    Название проекта
-                    <span class="badge bg-success ms-2">Низкий</span>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="p-2">
-                    <h5 class="mt-0">Описание</h5>
-                    <p class="text-muted mb-4">
-                        Само описание, сделать передачу
-                    </p>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-4">
-                                <h5>Приоритет</h5>
-                                <p>его список</p>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-4">
-                                <h5>Состояние</h5>
-                                <p>список</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-4">
-                                <h5>Категория</h5>
-                                <p>Название</p>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-4">
-                                <h5>Команда</h5>
-                                <p>Название</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="display:flex">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#create-category-modal" class="btn btn-secondary btn-sm">Добавить категорию</a>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn-danger" data-bs-toggle="modal" data-bs-target="#project-delete-modal">Удалить</button>
-                <button type="submit" class="btn-success">Сохранить</button>
-            </div>
-        </div>
+    <div class="modal-dialog" id="editDiv">
+        
     </div>
 </div>
 @*--------------------Изменение-----------------------*@
 @*--------------------Удаление------------------------*@
 <div class="modal fade" id="project-delete-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="project-delete-modalLabes" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="project-delete-modalLabel" style="font-size: 1.125rem;">
-                    Удаление проекта
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="p-2">
-                    <h5 class="mt-0">Вы уверены что хотите удалить данный проект?</h5>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn-danger">Удалить</button>
-                <button type="button" class="btn-secondary" data-bs-dismiss="modal">Отмена</button>
-            </div>
-        </div>
+    <div class="modal-dialog modal-dialog-centered" id="deleteDiv">
+        
     </div>
 </div>
 @*--------------------Удаление-----------------------*@
@@ -290,24 +368,33 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form method="post"
+                      asp-page-handler="AddCategory">
                     <div class="form-group mb-3">
-                        <label asp-for="InputProject.Name" class="col-sm-2 col-form-label"></label>
-                        <input asp-for="InputProject.Name" class="form-control" id="inputTitle" />
-                        <span asp-validation-for="InputProject.Name" style="color:darkred"></span>
+                        <label asp-for="InputCategory.Name" class="col-sm-2 col-form-label"></label>
+                        <input asp-for="InputCategory.Name" class="form-control" id="inputTitle" />
+                        <span asp-validation-for="InputCategory.Name" style="color:darkred"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="InputProject.Description" class="col-sm-2 col-form-label"></label>
-                        <input asp-for="InputProject.Description" class="form-control" id="inputTitle" />
-                        <span asp-validation-for="InputProject.Description" style="color:darkred"></span>
+                        <label asp-for="InputCategory.Description" class="col-sm-2 col-form-label"></label>
+                        <input asp-for="InputCategory.Description" class="form-control" id="inputTitle" />
+                        <span asp-validation-for="InputCategory.Description" style="color:darkred"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn-success">Добавить</button>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button type="submit" class="btn-success">Добавить</button>
-            </div>
+          
         </div>
     </div>
 </div>
 @*--------------------Добавление----------------------*@
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.6/dist/jquery.unobtrusive-ajax.min.js"></script>
+
+
+    }

@@ -1,7 +1,7 @@
 ﻿using ProjectsPlanning.Chernetsov.Data;
 using ProjectsPlanning.Chernetsov.Entities;
 
-namespace ProjectsPlanning.Chernetsov
+namespace ProjectsPlanning.Chernetsov.SeedData
 {
     public class SeedDataPriority
     {

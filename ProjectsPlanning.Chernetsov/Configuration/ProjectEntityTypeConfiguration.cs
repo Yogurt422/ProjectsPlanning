@@ -22,6 +22,10 @@ namespace ProjectsPlanning.Chernetsov.Configuration
             builder.Property(project => project.DueDate)
                 .HasColumnType("date");
 
+            builder.Property(project => project.Description)
+                .HasMaxLength(512)
+                .HasColumnType("nvarchar");
+
             //builder.HasOne(project => project.Company)
             //    .WithMany(c => c.Projects)
             //    .HasForeignKey(project => project.CompanyId)

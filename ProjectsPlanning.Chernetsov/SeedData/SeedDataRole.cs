@@ -2,10 +2,10 @@
 using ProjectsPlanning.Chernetsov.Data;
 using ProjectsPlanning.Chernetsov.Entities;
 
-namespace ProjectsPlanning.Chernetsov
+namespace ProjectsPlanning.Chernetsov.SeedData
 {
     // Проверяем, существуют ли уже должности в базе данных
-    public static class SeedData
+    public static class SeedDataRole
     {
         public static async System.Threading.Tasks.Task EnsureSeedData(IServiceProvider provider)
         {

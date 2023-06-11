@@ -17,10 +17,10 @@ namespace ProjectsPlanning.Chernetsov.Services
             _context.SaveChanges();
         }
 
-        public void DeleteProject(string projectName)
+        public void DeleteProject(int idProject)
         {
             var project = _context.Projects
-                .Where(p => p.Name == projectName)
+                .Where(p => p.Id == idProject)
                 .FirstOrDefault();
             project.IsDeleted = true;
             _context.SaveChanges();
@@ -62,13 +62,23 @@ namespace ProjectsPlanning.Chernetsov.Services
         }
 
      
-        public void UpdateProject(string projectName, Project newProject)
+        public void UpdateProject(int id, Project newProject)
         {
             var project = _context.Projects
-                .Where(p => p.Name == projectName && p.IsDeleted == false)
-                .FirstOrDefault();
-            project = newProject;
+                 .Where(pr => pr.Id == id)
+                 .FirstOrDefault();
+            project.IsDeleted = true;
+
+            _context.Projects.Add(newProject);
             _context.SaveChanges();
+        }
+        public Project GetProjectById(int id)
+        {
+            return _context.Projects
+                 .Where(p => p.Id == id && p.IsDeleted == false)
+                 .Include(pr => pr.Priority)
+                 .Include(pr => pr.Team)
+                 .FirstOrDefault();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace ProjectsPlanning.Chernetsov.Configuration
             builder.Property(pos => pos.Name)
                 .IsRequired()
                 .HasMaxLength(50)
-                .HasColumnName("nvarchar");
+                .HasColumnType("nvarchar");
 
             builder.Property(pos => pos.Description)
                 .IsRequired()

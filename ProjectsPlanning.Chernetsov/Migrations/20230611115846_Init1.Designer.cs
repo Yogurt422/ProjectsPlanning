@@ -12,8 +12,8 @@ using ProjectsPlanning.Chernetsov.Data;
 namespace ProjectsPlanning.Chernetsov.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230609231243_init1")]
-    partial class init1
+    [Migration("20230611115846_Init1")]
+    partial class Init1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -291,8 +291,7 @@ namespace ProjectsPlanning.Chernetsov.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("nvarchar");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Responsibilities")
                         .IsRequired()
@@ -345,6 +344,11 @@ namespace ProjectsPlanning.Chernetsov.Migrations
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("date");
